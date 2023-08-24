@@ -3,6 +3,8 @@
 import PackageDescription
 import Foundation
 
+let optimize: [SwiftSetting] = [.unsafeFlags(["-Onone"])] //[.unsafeFlags(["-cross-module-optimization", "-O"])]
+
 let package = Package(
     name: "Sourcery",
     platforms: [
@@ -62,14 +64,16 @@ let package = Package(
             path: "Sourcery",
             exclude: [
                 "Templates",
-            ]
+            ],
+            swiftSettings: optimize
         ),
         .target(
             name: "SourceryRuntime",
             path: "SourceryRuntime",
             exclude: [
                 "Supporting Files/Info.plist"
-            ]
+            ],
+            swiftSettings: optimize
         ),
         .target(
             name: "SourceryUtils",
@@ -79,7 +83,8 @@ let package = Package(
             path: "SourceryUtils",
             exclude: [
                 "Supporting Files/Info.plist"
-            ]
+            ],
+            swiftSettings: optimize
         ),
         .target(
             name: "SourceryFramework",
@@ -93,7 +98,8 @@ let package = Package(
             path: "SourceryFramework",
             exclude: [
                 "Info.plist"
-            ]
+            ],
+            swiftSettings: optimize
         ),
         .target(
             name: "SourceryStencil",
@@ -105,7 +111,8 @@ let package = Package(
             path: "SourceryStencil",
             exclude: [
                 "Info.plist"
-            ]
+            ],
+            swiftSettings: optimize
         ),
         .target(
             name: "SourceryJS",
@@ -118,7 +125,8 @@ let package = Package(
             ],
             resources: [
                 .copy("Resources/ejs.js")
-            ]
+            ],
+            swiftSettings: optimize
         ),
         .target(
             name: "SourcerySwift",
@@ -130,7 +138,8 @@ let package = Package(
             path: "SourcerySwift",
             exclude: [
                 "Info.plist"
-            ]
+            ],
+            swiftSettings: optimize
         ),
         .target(
             name: "CodableContext",
@@ -155,9 +164,11 @@ let package = Package(
             sources: [
                 "Context/AutoCodable.swift",
                 "Generated/AutoCodable.generated.swift"
-            ]
+            ],
+            swiftSettings: optimize
         ),
-        .target(name: "TryCatch", path: "TryCatch", exclude: ["Info.plist"]),
+        .target(name: "TryCatch", path: "TryCatch", exclude: ["Info.plist"],
+                swiftSettings: optimize),
         .testTarget(
             name: "SourceryLibTests",
             dependencies: [
